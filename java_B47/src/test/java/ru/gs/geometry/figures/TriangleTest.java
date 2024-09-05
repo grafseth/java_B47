@@ -9,7 +9,7 @@ public class TriangleTest {
     void canCalculateArea() {
         var t = new Triangle(3.0, 5.0, 7.0);
         double result = t.area();
-        Assertions.assertEquals(6.5, result);
+        Assertions.assertEquals(6.49519052838329, result);
     }
 @Test
     void canCalculatePerimeter() {
