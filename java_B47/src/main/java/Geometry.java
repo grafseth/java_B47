@@ -1,6 +1,28 @@
 public class Geometry {
     public static void main(String[] args) {
-        var side = 5.0;
-        System.out.println("Площадь квадрата со стороной " + side + " = " +(side*side));
+        printSquareArea(7.0);
+        printSquareArea(5.0);
+        printSquareArea(3.0);
+        
+        printRectangleArea(3.0, 5.0);         
+        printRectangleArea(7.0, 9.0);
+     
+    }
+
+    private static void printRectangleArea(double a, double b) {
+        System.out.println("Rectangle area with sides " + a + " and " + b + " = " + rectangleArea(a, b));
+    }
+
+    private static double rectangleArea(double a, double b) {
+        return a * b;
+    }
+
+    static void printSquareArea(double side) {
+            System.out.println("Площадь квадрата cо cтороной " + side + " = " + squareArea(side));
+        }
+
+    private static double squareArea(double a) {
+        return a * a;
     }
 }
+
