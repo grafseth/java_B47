@@ -2,10 +2,14 @@ package ru.gs.geometry.figures;
 
 public class Square {
 
-    private final double side;
+    private double side;
 
     public Square(double side) {
         this.side = side;
+if (side < 0) {
+    throw new IllegalArgumentException("Square side should be non negative");
+}
+
     }
 
     public static void printSquareArea(Square s) {
