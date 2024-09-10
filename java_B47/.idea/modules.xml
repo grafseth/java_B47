@@ -3,6 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/java_B47.iml" filepath="$PROJECT_DIR$/java_B47.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/addressbook_web_tests/java_B47.addressbook_web_tests.iml" filepath="$PROJECT_DIR$/.idea/modules/addressbook_web_tests/java_B47.addressbook_web_tests.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/addressbook_web_tests/java_B47.addressbook_web_tests.main.iml" filepath="$PROJECT_DIR$/.idea/modules/addressbook_web_tests/java_B47.addressbook_web_tests.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/addressbook_web_tests/java_B47.addressbook_web_tests.test.iml" filepath="$PROJECT_DIR$/.idea/modules/addressbook_web_tests/java_B47.addressbook_web_tests.test.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/java_B47.main.iml" filepath="$PROJECT_DIR$/.idea/modules/java_B47.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/java_B47.test.iml" filepath="$PROJECT_DIR$/.idea/modules/java_B47.test.iml" />
     </modules>
