@@ -60,6 +60,5 @@ public class GroupRemovalTests {
         driver.findElement(By.name("selected[]")).click();
         driver.findElement(By.name("delete")).click();
         driver.findElement(By.linkText("group page")).click();
-
     }
 }
