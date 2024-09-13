@@ -8,10 +8,9 @@ public class TestBase {
 
     @BeforeEach
     public void setUp() {
-if (app == null) {
-    app = new ApplicationManager();
-}
-        app.init();
+        if (app == null) {
+            app = new ApplicationManager();
+            app.init(System.getProperty("browser", "chrome"));
+        }
     }
-
 }
