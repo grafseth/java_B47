@@ -6,7 +6,7 @@ import org.openqa.selenium.By;
 public class ContactsHelper extends HelperBase {
 
     public ContactsHelper(ApplicationManager manager) {
-
+    super(manager);
     }
 
     public void openContactsPage() {
@@ -16,17 +16,18 @@ public class ContactsHelper extends HelperBase {
         }
     }
 
-    public void createContact(ContactData contact){
-                openContactsPage();
-                fillContactForm(contact);
-                submitContactCreation();
-                returnToHomePage();
-}
-public void removeContact() {
-    openContactsPage();
-    selectContact();
-    removeSelectedContact();
-    returnToHomePage();
+    public void createContact(ContactData contact) {
+        openContactsPage();
+        fillContactForm(contact);
+        submitContactCreation();
+        returnToHomePage();
+    }
+
+    public void removeContact() {
+        openContactsPage();
+        selectContact();
+        removeSelectedContact();
+        returnToHomePage();
     }
 
     private void removeSelectedContact() {
@@ -37,7 +38,7 @@ public void removeContact() {
         click(By.name("selected[]"));
     }
 
-    private void returnToHomePage()  {
+    private void returnToHomePage() {
         click(By.linkText("home page"));
     }
 
@@ -47,11 +48,11 @@ public void removeContact() {
     }
 
     private void fillContactForm(ContactData contact) {
-        type(By.name("contact_firstname"), contact.firstname());
-        type(By.name("contact_middlename"), contact.middlename());
-        type(By.name("contact_lastname"), contact.lastname());
-        type(By.name("contact_nickname"), contact.nickname());
-        type(By.name("+7123456789"), contact.home());
+        type(By.name("firstname"), contact.firstname());
+        type(By.name("middlename"), contact.middlename());
+        type(By.name("lastname"), contact.lastname());
+        type(By.name("nickname"), contact.nickname());
+        type(By.name("home"), contact.home());
     }
 
 
