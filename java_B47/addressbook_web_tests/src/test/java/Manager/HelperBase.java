@@ -9,6 +9,9 @@ public class HelperBase {
         HelperBase.manager = manager;
     }
 
+    public HelperBase() {
+    }
+
     protected static void click(By locator) {
         ApplicationManager.driver.findElement(locator).click();
     }

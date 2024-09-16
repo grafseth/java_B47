@@ -11,6 +11,7 @@ public class ApplicationManager {
     protected static WebDriver driver;
     private LoginHelper session;
     private GroupHelper groups;
+    private ContactsHelper contacts;
 
     public void init(String Browser) {
         if (driver == null) {
@@ -25,14 +26,15 @@ public class ApplicationManager {
             driver.get("http://localhost/addressbook/");
             driver.manage().window().setSize(new Dimension(1288, 885));
             session();
-            LoginHelper.login("admin", "secret");
+            session.login("admin", "secret");
         }
     }
 
-    public void session() {
+    public LoginHelper session() {
         if (session == null) {
             session = new LoginHelper(this);
         }
+        return session;
     }
 
     public GroupHelper groups() {
@@ -51,4 +53,10 @@ public class ApplicationManager {
         }
     }
 
+    public ContactsHelper contacts() {
+        if (contacts == null) {
+            contacts = new ContactsHelper(this);
+        }
+        return contacts;
+    }
 }

@@ -5,8 +5,10 @@ import org.openqa.selenium.By;
 
 public class ContactsHelper extends HelperBase {
 
-    public ContactsHelper(ApplicationManager manager);
-   super(manager);
+    public ContactsHelper(ApplicationManager manager) {
+
+    }
+
     public void openContactsPage() {
         if (!manager.isElementPresent(By.name("submit"))) ;
         {
@@ -28,6 +30,7 @@ public void removeContact() {
     }
 
     private void removeSelectedContact() {
+        click(By.name("Delete"));
     }
 
     private void selectContact() {
