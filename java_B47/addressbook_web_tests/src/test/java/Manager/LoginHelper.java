@@ -8,7 +8,7 @@ public class LoginHelper extends HelperBase {
 
     }
 
-    static void login(String user, String password) {
+    void session().login(String user, String password) {
         type(By.name("user"), user);
         type(By.name("pass"), password);
         click(By.xpath("//input[@value='Login']"));
