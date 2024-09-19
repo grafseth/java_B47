@@ -10,10 +10,8 @@ public class ContactsHelper extends HelperBase {
     }
 
     public void openContactsPage() {
-        if (!manager.isElementPresent(By.name("MainForm"))) ;
-        {
-            click(By.linkText("add new"));
-        }
+        manager.isElementPresent(By.name("MainForm"));
+
     }
     public boolean isContactPresent() {
         openContactsPage();
@@ -21,9 +19,17 @@ public class ContactsHelper extends HelperBase {
     }
     public void createContact(ContactData contact) {
         openContactsPage();
+        openNewContactPage();
         fillContactForm(contact);
         submitContactCreation();
         returnToHomePage();
+    }
+
+    private void openNewContactPage() {
+        if (!manager.isElementPresent(By.name("submit")));
+        {
+            click(By.xpath("//a[contains(@href, 'edit.php')]"));
+        }
     }
 
     public void removeContact() {
@@ -41,7 +47,7 @@ public class ContactsHelper extends HelperBase {
     }
 
     private void removeSelectedContact() {
-        click(By.name("Delete"));
+        click(By.xpath("//input[@value='Delete']"));
     }
 
     private void selectContact() {
