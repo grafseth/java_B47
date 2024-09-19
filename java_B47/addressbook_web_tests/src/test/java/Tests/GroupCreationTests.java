@@ -37,4 +37,16 @@ public class GroupCreationTests extends TestBase {
         app.groups().createGroup(new GroupData().withFooter("some footer"));
 
     }
+
+    @Test
+    public void canCreateMultipleGroups() {
+        int n = 5;
+        int groupCount = app.groups().getCount();
+
+        for (int i = 0; i < n; i++) {
+            app.groups().createGroup(new GroupData("test_group", "header", "footer"));
+        }
+        int newGroupCount = app.groups().getCount();
+        Assertions.assertEquals(groupCount + n, newGroupCount);
+    }
 }

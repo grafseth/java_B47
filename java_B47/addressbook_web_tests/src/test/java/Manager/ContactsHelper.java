@@ -10,7 +10,7 @@ public class ContactsHelper extends HelperBase {
     }
 
     public void openContactsPage() {
-        if (!manager.isElementPresent(By.name("submit"))) ;
+        if (!manager.isElementPresent(By.name("MainForm"))) ;
         {
             click(By.linkText("add new"));
         }
