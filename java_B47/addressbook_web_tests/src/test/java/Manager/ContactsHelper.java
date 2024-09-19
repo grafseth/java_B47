@@ -13,10 +13,12 @@ public class ContactsHelper extends HelperBase {
         manager.isElementPresent(By.name("MainForm"));
 
     }
-    public boolean isContactPresent() {
+    public int getCount() {
         openContactsPage();
-        return manager.isElementPresent(By.name("selected[]"));
+       return manager.driver.findElements(By.name("selected[]")).size();
     }
+
+
     public void createContact(ContactData contact) {
         openContactsPage();
         openNewContactPage();
@@ -36,6 +38,7 @@ public class ContactsHelper extends HelperBase {
         openContactsPage();
         selectContact();
         removeSelectedContact();
+        returnToHomePage();
             }
 
     private void fillContactForm(ContactData contact) {
@@ -55,7 +58,7 @@ public class ContactsHelper extends HelperBase {
     }
 
     private void returnToHomePage() {
-        click(By.linkText("home page"));
+        click(By.linkText("home"));
     }
 
     private void submitContactCreation() {
