@@ -51,9 +51,11 @@ public class ContactCreationTests extends TestBase {
             return Integer.compare(Integer.parseInt(o1.id()), Integer.parseInt(o2.id()));
         };
         newContacts.sort(compareById);
+
         var expectedList = new ArrayList<>(oldContacts);
-        expectedList.add(contacts.withId(newContacts.get(newContacts.size() -1).id()).withFirstname("").withMiddlename("").withLastname("").withNickname("").withHome(""));
+        expectedList.add(contacts.withId(newContacts.get(newContacts.size()-1).id()));
         expectedList.sort(compareById);
+
         Assertions.assertEquals(newContacts, expectedList);
     }
 }

@@ -44,6 +44,24 @@ public class ContactsHelper extends HelperBase {
         returnToHomePage();
             }
 
+     public void modifyContact(ContactData contact, ContactData modifiedContact) {
+        openContactsPage();
+        selectContact(contact);
+        initContactModification();
+        fillContactForm(modifiedContact);
+        submitContactModification();
+        returnToHomePage();
+     }
+
+    private void initContactModification() {
+    click(By.xpath("=(//img[@alt='Edit'])[2]"));
+    }
+
+    private void submitContactModification() {
+        click(By.name("update"));
+    }
+
+
     private void fillContactForm(ContactData contact) {
         type(By.name("firstname"), contact.firstname());
         type(By.name("middlename"), contact.middlename());
