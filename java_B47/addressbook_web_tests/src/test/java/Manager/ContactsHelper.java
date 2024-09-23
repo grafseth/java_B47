@@ -3,6 +3,9 @@ package Manager;
 import model.ContactData;
 import org.openqa.selenium.By;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ContactsHelper extends HelperBase {
 
     public ContactsHelper(ApplicationManager manager) {
@@ -63,6 +66,19 @@ public class ContactsHelper extends HelperBase {
 
     private void submitContactCreation() {
         click(By.name("submit"));
+    }
+
+    public List<ContactData> getList() {
+        openContactsPage();
+        var contacts = new ArrayList<ContactData>();
+        var tds = manager.driver.findElements(By.className("td.center"));
+for (var td : tds) {
+    var name = td.getText();
+    var checkbox = td.findElement(By.className("td.center"));
+    var id = checkbox.getAttribute("value");
+    contacts.add(new ContactData().withId(id).withFirstname(name));
+}
+        return contacts;
     }
 
 }
