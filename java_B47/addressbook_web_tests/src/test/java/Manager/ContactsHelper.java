@@ -9,16 +9,17 @@ import java.util.List;
 public class ContactsHelper extends HelperBase {
 
     public ContactsHelper(ApplicationManager manager) {
-    super(manager);
+        super(manager);
     }
 
     public void openContactsPage() {
         manager.isElementPresent(By.name("MainForm"));
 
     }
+
     public int getCount() {
         openContactsPage();
-       return manager.driver.findElements(By.name("selected[]")).size();
+        return ApplicationManager.driver.findElements(By.name("selected[]")).size();
     }
 
 
@@ -31,7 +32,7 @@ public class ContactsHelper extends HelperBase {
     }
 
     private void openNewContactPage() {
-        if (!manager.isElementPresent(By.name("submit")));
+        if (!manager.isElementPresent(By.name("submit"))) ;
         {
             click(By.xpath("//a[contains(@href, 'edit.php')]"));
         }
@@ -42,19 +43,19 @@ public class ContactsHelper extends HelperBase {
         selectContact(contact);
         removeSelectedContact();
         returnToHomePage();
-            }
+    }
 
-     public void modifyContact(ContactData contact, ContactData modifiedContact) {
+    public void modifyContact(ContactData contact, ContactData modifiedContact) {
         openContactsPage();
         selectContact(contact);
         initContactModification();
         fillContactForm(modifiedContact);
         submitContactModification();
         returnToHomePage();
-     }
+    }
 
     private void initContactModification() {
-    click(By.xpath("=(//img[@alt='Edit'])[2]"));
+        click(By.xpath("=(//img[@alt='Edit'])[2]"));
     }
 
     private void submitContactModification() {
@@ -68,6 +69,7 @@ public class ContactsHelper extends HelperBase {
         type(By.name("lastname"), contact.lastname());
         type(By.name("nickname"), contact.nickname());
         type(By.name("home"), contact.home());
+        attach(By.name("photo"), contact.photo());
     }
 
     private void removeSelectedContact() {
@@ -89,13 +91,13 @@ public class ContactsHelper extends HelperBase {
     public List<ContactData> getList() {
         openContactsPage();
         var contacts = new ArrayList<ContactData>();
-        var tds = manager.driver.findElements(By.className("td.center"));
-for (var td : tds) {
-    var name = td.getText();
-    var checkbox = td.findElement(By.className("td.center"));
-    var id = checkbox.getAttribute("value");
-    contacts.add(new ContactData().withId(id).withFirstname(name));
-}
+        var tds = ApplicationManager.driver.findElements(By.className("td.center"));
+        for (var td : tds) {
+            var name = td.getText();
+            var checkbox = td.findElement(By.className("td.center"));
+            var id = checkbox.getAttribute("value");
+            contacts.add(new ContactData().withId(id).withFirstname(name));
+        }
         return contacts;
     }
 

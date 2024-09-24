@@ -2,6 +2,7 @@ package Tests;
 
 import model.ContactData;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import java.util.ArrayList;
@@ -10,6 +11,15 @@ import java.util.List;
 
 
 public class ContactCreationTests extends TestBase {
+
+    @Test
+    void canCreateContact() {
+        var contact = new ContactData()
+                .withFirstname(randomString(10))
+                .withLastname(randomString(10))
+                .withPhoto("src/test/resources/images/avatar.png");
+        app.contacts().createContact(contact);
+    }
 
     public static List<ContactData> contactProvider() {
 

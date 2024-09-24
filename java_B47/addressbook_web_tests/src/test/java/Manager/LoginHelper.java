@@ -5,7 +5,7 @@ import org.openqa.selenium.By;
 public class LoginHelper extends HelperBase {
 
     public LoginHelper(ApplicationManager manager) {
-                this.manager = manager;
+        HelperBase.manager = manager;
     }
 
 

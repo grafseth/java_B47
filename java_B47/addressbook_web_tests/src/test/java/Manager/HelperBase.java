@@ -2,6 +2,8 @@ package Manager;
 
 import org.openqa.selenium.By;
 
+import java.nio.file.Paths;
+
 public class HelperBase {
     protected static ApplicationManager manager;
 
@@ -20,5 +22,9 @@ public class HelperBase {
         click(locator);
         ApplicationManager.driver.findElement(locator).clear();
         ApplicationManager.driver.findElement(locator).sendKeys(text);
+    }
+
+    protected static void attach(By locator, String file) {
+        ApplicationManager.driver.findElement(locator).sendKeys(Paths.get(file).toAbsolutePath().toString());
     }
 }

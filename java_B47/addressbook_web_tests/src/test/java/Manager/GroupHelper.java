@@ -13,6 +13,13 @@ public class GroupHelper extends HelperBase {
 
     }
 
+    private static void selectAllGroups() {
+        var checkboxes = ApplicationManager.driver.findElements(By.name("selected[]"));
+        for (var checkbox : checkboxes) {
+            checkbox.click();
+        }
+    }
+
     public void openGroupsPage() {
         if (!manager.isElementPresent(By.name("new"))) ;
         {
@@ -48,7 +55,6 @@ public class GroupHelper extends HelperBase {
         click(By.name("submit"));
     }
 
-
     private void initGroupCreation() {
         click(By.name("new"));
     }
@@ -82,7 +88,7 @@ public class GroupHelper extends HelperBase {
 
     public int getCount() {
         openGroupsPage();
-        return manager.driver.findElements(By.name("selected[]")).size();
+        return ApplicationManager.driver.findElements(By.name("selected[]")).size();
     }
 
     public void removeAllGroups() {
@@ -91,17 +97,10 @@ public class GroupHelper extends HelperBase {
         removerSelectedGroups();
     }
 
-    private static void selectAllGroups() {
-        var checkboxes = manager.driver.findElements(By.name("selected[]"));
-        for (var checkbox : checkboxes) {
-            checkbox.click();
-        }
-    }
-
     public List<GroupData> getList() {
         openGroupsPage();
         var groups = new ArrayList<GroupData>();
-        var spans = manager.driver.findElements(By.cssSelector("span.group"));
+        var spans = ApplicationManager.driver.findElements(By.cssSelector("span.group"));
         for (var span : spans) {
             var name = span.getText();
             var checkbox = span.findElement(By.name("selected[]"));
