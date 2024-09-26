@@ -1,18 +1,23 @@
 package ru.gs.addressbook.Tests;
 
-import ru.gs.addressbook.commin.CommonFunctions;
-import ru.gs.addressbook.model.ContactData;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
+import ru.gs.addressbook.commin.CommonFunctions;
+import ru.gs.addressbook.model.ContactData;
+import ru.gs.addressbook.model.GroupData;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
 
-public class ContactCreationTests extends TestBase {
+public class ContactCreationTestsJson extends TestBase {
 
     @Test
     void canCreateContact() {
@@ -23,35 +28,30 @@ public class ContactCreationTests extends TestBase {
         app.contacts().createContact(contact);
     }
 
-    public static List<ContactData> contactProvider() {
+    public static List<ContactData> contactProvider() throws IOException {
 
     var result = new ArrayList<ContactData>();
-    for (var firstname : List.of(" ", "test_name")) {
-        for (var middlename : List.of(" ", "test_middle")) {
-            for (var lastname : List.of(" ", "test_last")) {
-                for (var nickname : List.of(" ", "test_nick")) {
-                    for (var home : List.of(" ", "test_phone")) {
+//    for (var firstname : List.of(" ", "test_name")) {
+//        for (var middlename : List.of(" ", "test_middle")) {
+//            for (var lastname : List.of(" ", "test_last")) {
+//                for (var nickname : List.of(" ", "test_nick")) {
+//                    for (var home : List.of(" ", "test_phone")) {
+//
+//                            result.add(new ContactData()
+//                                    .withFirstname(firstname)
+//                                    .withMiddlename(middlename)
+//                                    .withLastname(lastname)
+//                                    .withNickname(nickname)
+//                                    .withHome(home));
+//                        }
+//                }
+//            }
+//        }
+//    }
 
-                            result.add(new ContactData()
-                                    .withFirstname(firstname)
-                                    .withMiddlename(middlename)
-                                    .withLastname(lastname)
-                                    .withNickname(nickname)
-                                    .withHome(home));
-                        }
-                }
-            }
-        }
-    }
-
-    for (int i = 0; i < 5; i++) {
-        result.add(new ContactData()
-                .withFirstname(CommonFunctions.randomString(i*10))
-                .withMiddlename(CommonFunctions.randomString(i*10))
-                .withLastname(CommonFunctions.randomString(i*10))
-                .withNickname(CommonFunctions.randomString(i*10))
-                .withHome(CommonFunctions.randomString(i*10)));
-            }
+        var mapper = new ObjectMapper();
+        var value = mapper.readValue(new File("contacts.json"), new TypeReference<List<ContactData>>() {});
+        result.addAll(value);
     return result;
     }
 
@@ -70,10 +70,7 @@ public class ContactCreationTests extends TestBase {
         expectedList.add(contacts.withId(newContacts.get(newContacts.size()-1).id())
                 .withFirstname("")
                 .withMiddlename("")
-                .withLastname("")
-                .withNickname("")
-                .withHome("")
-                .withPhoto(""));
+                .withLastname(""));
         expectedList.sort(compareById);
 
         Assertions.assertEquals(newContacts, expectedList);

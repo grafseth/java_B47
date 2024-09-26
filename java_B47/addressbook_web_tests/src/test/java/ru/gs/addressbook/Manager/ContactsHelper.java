@@ -17,18 +17,11 @@ public class ContactsHelper extends HelperBase {
 
     }
 
-    public int getCount() {
-        openContactsPage();
-        return ApplicationManager.driver.findElements(By.name("selected[]")).size();
-    }
-
-
     public void createContact(ContactData contact) {
         openContactsPage();
         openNewContactPage();
         fillContactForm(contact);
         submitContactCreation();
-        returnToHomePage();
     }
 
     private void openNewContactPage() {
@@ -42,7 +35,7 @@ public class ContactsHelper extends HelperBase {
         openContactsPage();
         selectContact(contact);
         removeSelectedContact();
-        returnToHomePage();
+
     }
 
     public void modifyContact(ContactData contact, ContactData modifiedContact) {
@@ -51,7 +44,7 @@ public class ContactsHelper extends HelperBase {
         initContactModification();
         fillContactForm(modifiedContact);
         submitContactModification();
-        returnToHomePage();
+
     }
 
     private void initContactModification() {
@@ -69,7 +62,7 @@ public class ContactsHelper extends HelperBase {
         type(By.name("lastname"), contact.lastname());
         type(By.name("nickname"), contact.nickname());
         type(By.name("home"), contact.home());
-        attach(By.name("photo"), contact.photo());
+        //attach(By.name("photo"), contact.photo());
     }
 
     private void removeSelectedContact() {
@@ -91,12 +84,13 @@ public class ContactsHelper extends HelperBase {
     public List<ContactData> getList() {
         openContactsPage();
         var contacts = new ArrayList<ContactData>();
-        var tds = ApplicationManager.driver.findElements(By.className("td.center"));
-        for (var td : tds) {
-            var name = td.getText();
-            var checkbox = td.findElement(By.className("td.center"));
+        var trs = ApplicationManager.driver.findElements(By.className("tr."));
+        for (var tr : trs) {
+            var name = tr.getText();
+            var checkbox = tr.findElement(By.cssSelector("entry"));
             var id = checkbox.getAttribute("value");
-            contacts.add(new ContactData().withId(id).withFirstname(name));
+            contacts.add(new ContactData().withId(id)
+                    .withFirstname(name));
         }
         return contacts;
     }

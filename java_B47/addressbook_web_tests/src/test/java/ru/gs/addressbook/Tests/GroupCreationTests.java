@@ -2,6 +2,7 @@ package ru.gs.addressbook.Tests;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import ru.gs.addressbook.commin.CommonFunctions;
 import ru.gs.addressbook.model.GroupData;
 import org.junit.jupiter.api.Assertions;
@@ -28,8 +29,8 @@ public class GroupCreationTests extends TestBase {
 //                }
 //            }
 //        }
-        ObjectMapper mapper = new ObjectMapper();
-        var value = mapper.readValue(new File("groups.json"), new TypeReference<List<GroupData>>() {});
+        var mapper = new XmlMapper();
+        var value = mapper.readValue(new File("groups.xml"), new TypeReference<List<GroupData>>() {});
         result.addAll(value);
         return result;
     }
