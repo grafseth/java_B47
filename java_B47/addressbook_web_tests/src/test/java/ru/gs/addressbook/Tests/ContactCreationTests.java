@@ -1,6 +1,6 @@
 package ru.gs.addressbook.Tests;
 
-import ru.gs.addressbook.commin.CommonFunctions;
+import ru.gs.addressbook.common.CommonFunctions;
 import ru.gs.addressbook.model.ContactData;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

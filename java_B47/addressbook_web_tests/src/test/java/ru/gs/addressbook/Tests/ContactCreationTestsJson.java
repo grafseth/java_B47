@@ -6,9 +6,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
-import ru.gs.addressbook.commin.CommonFunctions;
+import ru.gs.addressbook.common.CommonFunctions;
 import ru.gs.addressbook.model.ContactData;
-import ru.gs.addressbook.model.GroupData;
 
 import java.io.File;
 import java.io.IOException;

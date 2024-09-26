@@ -6,7 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
-import ru.gs.addressbook.commin.CommonFunctions;
+import ru.gs.addressbook.common.CommonFunctions;
 import ru.gs.addressbook.model.ContactData;
 import ru.gs.addressbook.model.GroupData;
 

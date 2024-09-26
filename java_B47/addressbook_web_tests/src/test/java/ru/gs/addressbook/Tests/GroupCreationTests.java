@@ -1,9 +1,8 @@
 package ru.gs.addressbook.Tests;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
-import ru.gs.addressbook.commin.CommonFunctions;
+import ru.gs.addressbook.common.CommonFunctions;
 import ru.gs.addressbook.model.GroupData;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -11,6 +10,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -35,19 +35,28 @@ public class GroupCreationTests extends TestBase {
         return result;
     }
 
+    public static List<GroupData> singleRandomGroup() throws IOException {
+    return List.of(new GroupData()
+            .withName(CommonFunctions.randomString(10))
+            .withHeader(CommonFunctions.randomString(20))
+            .withFooter(CommonFunctions.randomString(30)));
+    }
+
     @ParameterizedTest
-    @MethodSource("groupProvider")
-    public void canCreateMultipleGroups(GroupData group) {
-        var oldGroups = app.groups().getList();
+    @MethodSource("singleRandomGroup")
+    public void canCreateGroup(GroupData group) throws SQLException {
+        var oldGroups = app.jdbc().getGroupList();
        app.groups().createGroup(group);
-        var newGroups = app.groups().getList();
+        var newGroups = app.jdbc().getGroupList();
         Comparator<GroupData> compareById = (o1, o2) -> {
             return Integer.compare(Integer.parseInt(o1.Id()), Integer.parseInt(o2.Id()));
         };
         newGroups.sort(compareById);
+        var maxId = newGroups.get(newGroups.size() - 1).Id();
+
 
         var expectedList = new ArrayList<>(oldGroups);
-        expectedList.add(group.withId(newGroups.get(newGroups.size() - 1).Id()).withHeader("").withFooter(""));
+        expectedList.add(group.withId(maxId));
         expectedList.sort(compareById);
         Assertions.assertEquals(newGroups, expectedList);
     }

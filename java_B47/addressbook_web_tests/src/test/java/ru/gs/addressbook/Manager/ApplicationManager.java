@@ -14,9 +14,14 @@ public class ApplicationManager {
     private LoginHelper session;
     private GroupHelper groups;
     private ContactsHelper contacts;
+    private JdbcHelper jdbc;
+    private HIbernateHelper hbm;
+
     private Properties properties;
 
+
     public void init(String Browser, Properties properties) {
+        this.properties = properties;
         if (driver == null) {
             if ("chrome".equals(Browser)) {
                 driver = new ChromeDriver();
@@ -60,5 +65,11 @@ public class ApplicationManager {
             contacts = new ContactsHelper(this);
         }
         return contacts;
+    }
+    public JdbcHelper jdbc() {
+        if (jdbc == null) {
+            jdbc = new JdbcHelper(this);
+        }
+        return jdbc;
     }
 }

@@ -1,4 +1,4 @@
-package ru.gs.addressbook.commin;
+package ru.gs.addressbook.common;
 
 import java.util.Random;
 
