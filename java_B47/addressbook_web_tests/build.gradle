@@ -25,4 +25,7 @@ test {
     if (project.hasProperty("Browser")) {
         systemProperty("Browser", project.property("Browser"));
     }
+    if (project.hasProperty("target")) {
+        systemProperty("target", project.property("target"));
+    }
     }
