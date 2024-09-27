@@ -53,8 +53,6 @@ public class GroupCreationTests extends TestBase {
         };
         newGroups.sort(compareById);
         var maxId = newGroups.get(newGroups.size() - 1).Id();
-
-
         var expectedList = new ArrayList<>(oldGroups);
         expectedList.add(group.withId(maxId));
         expectedList.sort(compareById);

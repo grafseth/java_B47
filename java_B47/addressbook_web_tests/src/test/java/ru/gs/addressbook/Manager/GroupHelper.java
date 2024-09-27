@@ -51,6 +51,30 @@ public class GroupHelper extends HelperBase {
         returnToGroupsPage();
     }
 
+    public int getCount() {
+        openGroupsPage();
+        return ApplicationManager.driver.findElements(By.name("selected[]")).size();
+    }
+
+    public void removeAllGroups() {
+        openGroupsPage();
+        selectAllGroups();
+        removerSelectedGroups();
+    }
+
+    public List<GroupData> getList() {
+        openGroupsPage();
+        var groups = new ArrayList<GroupData>();
+        var spans = ApplicationManager.driver.findElements(By.cssSelector("span.group"));
+        for (var span : spans) {
+            var name = span.getText();
+            var checkbox = span.findElement(By.name("selected[]"));
+            var id = checkbox.getAttribute("value");
+            groups.add(new GroupData().withId(id).withName(name));
+        }
+        return groups;
+    }
+
     private void submitGroupCreation() {
         click(By.name("submit"));
     }
@@ -85,30 +109,4 @@ public class GroupHelper extends HelperBase {
 
         click(By.cssSelector(String.format("input[value='%s']", group.Id())));
     }
-
-    public int getCount() {
-        openGroupsPage();
-        return ApplicationManager.driver.findElements(By.name("selected[]")).size();
-    }
-
-    public void removeAllGroups() {
-        openGroupsPage();
-        selectAllGroups();
-        removerSelectedGroups();
-    }
-
-    public List<GroupData> getList() {
-        openGroupsPage();
-        var groups = new ArrayList<GroupData>();
-        var spans = ApplicationManager.driver.findElements(By.cssSelector("span.group"));
-        for (var span : spans) {
-            var name = span.getText();
-            var checkbox = span.findElement(By.name("selected[]"));
-            var id = checkbox.getAttribute("value");
-            groups.add(new GroupData().withId(id).withName(name));
-        }
-        return groups;
-    }
 }
-
-

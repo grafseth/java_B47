@@ -1,7 +1,9 @@
 package ru.gs.addressbook.Manager;
 
+import org.openqa.selenium.support.ui.Select;
 import ru.gs.addressbook.model.ContactData;
 import org.openqa.selenium.By;
+import ru.gs.addressbook.model.GroupData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,11 +19,27 @@ public class ContactsHelper extends HelperBase {
 
     }
 
-    public void createContact(ContactData contact) {
-        openContactsPage();
-        openNewContactPage();
+    public void Create(ContactData contact) {
+        initContactCreation();
         fillContactForm(contact);
         submitContactCreation();
+        returnToHomePage();
+    }
+
+    public void Create(ContactData contact, GroupData group) {
+        initContactCreation();
+        fillContactForm(contact);
+        selectGroup(group);
+        submitContactCreation();
+        returnToHomePage();
+    }
+
+    private void selectGroup(GroupData group) {
+        new Select(manager.driver.findElement(By.name("new_group"))).selectByValue(group.Id());
+    }
+
+    private void initContactCreation() {
+        click(By.xpath("//a[contains(text(),'add new')]"));
     }
 
     private void openNewContactPage() {
@@ -40,15 +58,21 @@ public class ContactsHelper extends HelperBase {
 
     public void modifyContact(ContactData contact, ContactData modifiedContact) {
         openContactsPage();
-        selectContact(contact);
-        initContactModification();
+        openNewContactPage();
+        initContactModification(contact.id());
         fillContactForm(modifiedContact);
         submitContactModification();
-
+        returnToHomePage();
     }
 
-    private void initContactModification() {
-        click(By.xpath("=(//img[@alt='Edit'])[2]"));
+    public int getCount() {
+        openContactsPage();
+        return ApplicationManager.driver.findElements(By.xpath("//img[@alt='vCard']")).size();
+    }
+
+    private void initContactModification(String contact) {
+        click(By.xpath(String.format("//img[@alt='Edit'])[value='%s']", contact)));
+
     }
 
     private void submitContactModification() {
@@ -84,16 +108,14 @@ public class ContactsHelper extends HelperBase {
     public List<ContactData> getList() {
         openContactsPage();
         var contacts = new ArrayList<ContactData>();
-        var trs = ApplicationManager.driver.findElements(By.className("tr."));
+        var trs = ApplicationManager.driver.findElements(By.cssSelector("tr.center"));
         for (var tr : trs) {
             var name = tr.getText();
-            var checkbox = tr.findElement(By.cssSelector("entry"));
+            var checkbox = tr.findElement(By.name("selected[]"));
             var id = checkbox.getAttribute("value");
             contacts.add(new ContactData().withId(id)
                     .withFirstname(name));
         }
         return contacts;
+        }
     }
-
-}
-

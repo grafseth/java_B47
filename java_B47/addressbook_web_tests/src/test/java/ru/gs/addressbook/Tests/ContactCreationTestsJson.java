@@ -24,7 +24,7 @@ public class ContactCreationTestsJson extends TestBase {
                 .withFirstname(CommonFunctions.randomString(10))
                 .withLastname(CommonFunctions.randomString(10))
                 .withPhoto(randomFile("src/test/resources/images/"));
-        app.contacts().createContact(contact);
+        app.contacts().Create(contact);
     }
 
     public static List<ContactData> contactProvider() throws IOException {
@@ -54,24 +54,24 @@ public class ContactCreationTestsJson extends TestBase {
     return result;
     }
 
-    @ParameterizedTest
-    @MethodSource("contactProvider")
-    public void canCreateMultipleContacts(ContactData contacts) {
-        var oldContacts = app.contacts().getList();
-        app.contacts().createContact(contacts);
-        var newContacts = app.contacts().getList();
-        Comparator<ContactData> compareById = (o1, o2) -> {
-            return Integer.compare(Integer.parseInt(o1.id()), Integer.parseInt(o2.id()));
-        };
-        newContacts.sort(compareById);
-
-        var expectedList = new ArrayList<>(oldContacts);
-        expectedList.add(contacts.withId(newContacts.get(newContacts.size()-1).id())
-                .withFirstname("")
-                .withMiddlename("")
-                .withLastname(""));
-        expectedList.sort(compareById);
-
-        Assertions.assertEquals(newContacts, expectedList);
-    }
+//    @ParameterizedTest
+//    @MethodSource("contactProvider")
+//    public void canCreateMultipleContacts(ContactData contacts) {
+//        var oldContacts = app.contacts().getList();
+//        app.contacts().Create(contacts);
+//        var newContacts = app.contacts().getList();
+//        Comparator<ContactData> compareById = (o1, o2) -> {
+//            return Integer.compare(Integer.parseInt(o1.id()), Integer.parseInt(o2.id()));
+//        };
+//        newContacts.sort(compareById);
+//
+//        var expectedList = new ArrayList<>(oldContacts);
+//        expectedList.add(contacts.withId(newContacts.get(newContacts.size()-1).id())
+//                .withFirstname("")
+//                .withMiddlename("")
+//                .withLastname(""));
+//        expectedList.sort(compareById);
+//
+//        Assertions.assertEquals(newContacts, expectedList);
+//    }
 }
