@@ -11,6 +11,7 @@ import ru.gs.addressbook.model.ContactData;
 import ru.gs.addressbook.model.GroupData;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -77,19 +78,20 @@ public class Generator {
     private void save(Object data) throws IOException {
         if ("json".equals(format)) {
             ObjectMapper mapper = new ObjectMapper();
-            mapper.enable(SerializationFeature.INDENT_OUTPUT);
-            mapper.writeValue(new File(output), data);
-        }
-        if ("yaml".equals(format)) {
+            mapper .enable(SerializationFeature. INDENT_OUTPUT) ;
+            var json = mapper.writeValueAsString(data);
+
+            try (var writer = new FileWriter(output)) {
+                writer.write(json);
+            }
+        } else if ("yaml".equals(format)) {
             var mapper = new YAMLMapper();
             mapper.writeValue(new File(output), data);
-        }
-        if ("xml".equals(format)) {
+        } else if ("xml".equals(format)) {
             var mapper = new XmlMapper();
             mapper.writeValue(new File(output), data);
         } else {
-                throw new IllegalArgumentException("Unknown data type " + format);
-            }
+            throw new IllegalArgumentException("Unknown data type " + format);
         }
     }
-
+}
