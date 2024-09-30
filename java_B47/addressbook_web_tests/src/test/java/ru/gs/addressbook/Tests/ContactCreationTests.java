@@ -1,13 +1,17 @@
 package ru.gs.addressbook.Tests;
 
-import ru.gs.addressbook.common.CommonFunctions;
-import ru.gs.addressbook.model.ContactData;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
+import ru.gs.addressbook.common.CommonFunctions;
+import ru.gs.addressbook.model.ContactData;
 import ru.gs.addressbook.model.GroupData;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -22,6 +26,32 @@ public class ContactCreationTests extends TestBase {
                 .withLastname(CommonFunctions.randomString(10))
                 .withPhoto(randomFile("src/test/resources/images/"));
         app.contacts().Create(contact);
+    }
+
+    private static List<ContactData> contactProvider() throws IOException {
+        var result = new ArrayList<ContactData>();
+        //    for (var firstname : List.of(" ", "test_name")) {
+//        for (var middlename : List.of(" ", "test_middle")) {
+//            for (var lastname : List.of(" ", "test_last")) {
+//                for (var nickname : List.of(" ", "test_nick")) {
+//                    for (var home : List.of(" ", "test_phone")) {
+//
+//                            result.add(new ContactData()
+//                                    .withFirstname(firstname)
+//                                    .withMiddlename(middlename)
+//                                    .withLastname(lastname)
+//                                    .withNickname(nickname)
+//                                    .withHome(home));
+//                        }
+//                }
+//            }
+//        }
+//    }
+
+        var mapper = new ObjectMapper();
+        var value = mapper.readValue(new File("contacts.json"), new TypeReference<List<ContactData>>() {});
+        result.addAll(value);
+        return result;
     }
 
 
@@ -41,8 +71,6 @@ public class ContactCreationTests extends TestBase {
         var newRelated = app.hbm().getContactsInGroup(group);
         Assertions.assertEquals(oldRelated.size()+1, newRelated.size());
     }
-
-
 
     public static List<ContactData> contactProvider() {
 

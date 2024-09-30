@@ -1,8 +1,8 @@
 package ru.gs.addressbook.Manager;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.Select;
 import ru.gs.addressbook.model.ContactData;
-import org.openqa.selenium.By;
 import ru.gs.addressbook.model.GroupData;
 
 import java.util.ArrayList;
@@ -35,11 +35,11 @@ public class ContactsHelper extends HelperBase {
     }
 
     private void selectGroup(GroupData group) {
-        new Select(manager.driver.findElement(By.name("new_group"))).selectByValue(group.Id());
+        new Select(ApplicationManager.driver.findElement(By.name("new_group"))).selectByValue(group.Id());
     }
 
     private void initContactCreation() {
-        click(By.xpath("//a[contains(text(),'add new')]"));
+        click(By.linkText("add new"));
     }
 
     private void openNewContactPage() {
@@ -79,6 +79,10 @@ public class ContactsHelper extends HelperBase {
         click(By.name("update"));
     }
 
+    public boolean isContactPresent() {
+        openContactsPage();
+        return manager.isElementPresent(By.name("selected[]"));
+    }
 
     private void fillContactForm(ContactData contact) {
         type(By.name("firstname"), contact.firstname());
@@ -98,7 +102,7 @@ public class ContactsHelper extends HelperBase {
     }
 
     private void returnToHomePage() {
-        click(By.linkText("home"));
+        click(By.linkText("home page"));
     }
 
     private void submitContactCreation() {
@@ -108,14 +112,27 @@ public class ContactsHelper extends HelperBase {
     public List<ContactData> getList() {
         openContactsPage();
         var contacts = new ArrayList<ContactData>();
-        var trs = ApplicationManager.driver.findElements(By.cssSelector("tr.center"));
-        for (var tr : trs) {
-            var name = tr.getText();
-            var checkbox = tr.findElement(By.name("selected[]"));
-            var id = checkbox.getAttribute("value");
-            contacts.add(new ContactData().withId(id)
-                    .withFirstname(name));
+        var centers = ApplicationManager.driver.findElements(By.cssSelector("tr[name=\"entry\"]"));
+        for (var cnt : centers) {
+            var lastName = cnt.findElement(By.cssSelector("td:nth-child(2)"));
+            var last = lastName.getText();
+            if (last == null || last.isEmpty()) {
+                last = "";
+            }
+            var firstName = cnt.findElement(By.cssSelector("td:nth-child(3)"));
+            var first = firstName.getText();
+            if (first == null || first.isEmpty()) {
+                first = "";
+            }
+            var address = cnt.findElement(By.cssSelector("td:nth-child(4)"));
+            var addr = address.getText();
+            if (addr == null || addr.isEmpty()) {
+                addr = "";
+            }
+            var checkbox = cnt.findElement(By.name("selected[]"));
+            var id = checkbox.getAttribute("id");
+            contacts.add(new ContactData().withId(id).withLastname(last).withFirstname(first).withAddress(addr));
         }
         return contacts;
-        }
     }
+}
