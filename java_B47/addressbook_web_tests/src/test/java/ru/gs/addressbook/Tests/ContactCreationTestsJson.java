@@ -56,7 +56,7 @@ var mapper = new XmlMapper();
         newContacts.sort(compareById);
         var maxId = newContacts.get(newContacts.size() - 1).id();
         var expectedList = new ArrayList<>(oldContacts);
-        expectedList.add(contacts.withId(maxId));
+        expectedList.add(contacts.withId(maxId).withFirstname("").withMiddlename("").withLastname(""));
         expectedList.sort(compareById);
         Assertions.assertEquals(newContacts, expectedList);
     }
