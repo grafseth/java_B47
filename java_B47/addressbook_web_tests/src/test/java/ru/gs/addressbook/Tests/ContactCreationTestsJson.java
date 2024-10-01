@@ -43,6 +43,32 @@ var mapper = new XmlMapper();
     return result;
     }
 
+//    public static List<ContactData> anotherContactProvider() throws IOException {
+//        return List.of(new ContactData()
+//                .withFirstname(CommonFunctions.randomString(10))
+//                .withMiddlename(CommonFunctions.randomString(20))
+//                .withLastname(CommonFunctions.randomString(30)));
+//    }
+//
+//    @ParameterizedTest
+//    @MethodSource("anotherContactProvider")
+//    public void canCreateMultipleContactsAssert(ContactData contacts) {
+//        app.contacts().openContactsPage();
+//        var oldContacts = app.contacts().getList();
+//        app.contacts().createContact(contacts);
+//        var newContacts = app.contacts().getList();
+//        Comparator<ContactData> compareById = (o1, o2) -> {
+//            return Integer.compare(Integer.parseInt(o1.id()), Integer.parseInt(o2.id()));
+//        };
+//        newContacts.sort(compareById);
+//        var maxId = newContacts.get(newContacts.size() - 1).id();
+//        var expectedList = new ArrayList<>(oldContacts);
+//        expectedList.add(contacts.withId(maxId).withFirstname("").withMiddlename("").withLastname(""));
+//        expectedList.sort(compareById);
+//        Assertions.assertEquals(newContacts, expectedList);
+//    }
+
+
     @ParameterizedTest
     @MethodSource("contactProvider")
     public void canCreateMultipleContacts(ContactData contacts) {
