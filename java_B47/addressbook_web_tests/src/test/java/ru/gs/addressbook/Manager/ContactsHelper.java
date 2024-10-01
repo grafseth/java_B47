@@ -14,9 +14,9 @@ public class ContactsHelper extends HelperBase {
         super(manager);
     }
 
-    public void openContactsPage() {
-        manager.isElementPresent(By.name("MainForm"));
-
+    public void openContactsPage()
+    {
+        click(By.linkText("home"));
     }
 
     public void createContact(ContactData contact) {

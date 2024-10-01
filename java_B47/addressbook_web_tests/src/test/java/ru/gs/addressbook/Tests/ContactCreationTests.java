@@ -71,6 +71,7 @@ var mapper = new XmlMapper();
     @ParameterizedTest
     @MethodSource("contactProvider")
     public void canCreateMultipleContacts(ContactData contacts) {
+        app.contacts().openContactsPage();
         var oldContacts = app.contacts().getList();
         app.contacts().createContact(contacts);
         var newContacts = app.contacts().getList();

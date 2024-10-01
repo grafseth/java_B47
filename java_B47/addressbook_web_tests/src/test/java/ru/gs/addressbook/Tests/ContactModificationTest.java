@@ -11,6 +11,7 @@ import java.util.Random;
  public class ContactModificationTest extends TestBase {
     @Test
     void canModifyContact() {
+        app.contacts().openContactsPage();
         if (app.contacts().getCount() == 0) {
             app.contacts().createContact(new ContactData("", "test_name", "test_middle", "test_last", "test_nick", "test_phone", "", ""));
         }
