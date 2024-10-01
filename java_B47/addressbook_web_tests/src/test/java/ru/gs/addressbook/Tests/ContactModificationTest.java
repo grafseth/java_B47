@@ -17,7 +17,7 @@ import java.util.Random;
         var oldContacts = app.contacts().getList();
         var rnd = new Random();
         var index = rnd.nextInt(oldContacts.size());
-        var testData = new ContactData().withFirstname("modified Name");
+        var testData = new ContactData().withFirstname("modified_Name");
         app.contacts().modifyContact(oldContacts.get(index), testData);
         var newContacts = app.contacts().getList();
         var expectedList = new ArrayList<>(oldContacts);
