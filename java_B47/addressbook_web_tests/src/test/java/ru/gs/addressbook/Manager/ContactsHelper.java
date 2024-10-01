@@ -19,8 +19,8 @@ public class ContactsHelper extends HelperBase {
 
     }
 
-    public void Create(ContactData contact) {
-        initContactCreation();
+    public void createContact(ContactData contact) {
+        openNewContactPage();
         fillContactForm(contact);
         submitContactCreation();
         returnToHomePage();
@@ -58,21 +58,19 @@ public class ContactsHelper extends HelperBase {
 
     public void modifyContact(ContactData contact, ContactData modifiedContact) {
         openContactsPage();
-        openNewContactPage();
-        initContactModification(contact.id());
+        selectContactToModify(contact);
         fillContactForm(modifiedContact);
         submitContactModification();
-        returnToHomePage();
+    }
+
+    private void selectContactToModify(ContactData contact) {
+
+        click(By.cssSelector(String.format("[href=\"edit.php?id=%s\"]", contact.id())));
     }
 
     public int getCount() {
         openContactsPage();
         return ApplicationManager.driver.findElements(By.xpath("//img[@alt='vCard']")).size();
-    }
-
-    private void initContactModification(String contact) {
-        click(By.xpath(String.format("//img[@alt='Edit'])[value='%s']", contact)));
-
     }
 
     private void submitContactModification() {
@@ -98,7 +96,7 @@ public class ContactsHelper extends HelperBase {
     }
 
     private void selectContact(ContactData contact) {
-        click(By.cssSelector(String.format("input[value='%s']", contact.id())));
+        click(By.cssSelector(String.format("input[id='%s']", contact.id())));
     }
 
     private void returnToHomePage() {
@@ -124,14 +122,14 @@ public class ContactsHelper extends HelperBase {
             if (first == null || first.isEmpty()) {
                 first = "";
             }
-//            var address = cnt.findElement(By.cssSelector("td:nth-child(4)"));
-//            var addr = address.getText();
-//            if (addr == null || addr.isEmpty()) {
-//                addr = "";
-//            }
+            var address = cnt.findElement(By.cssSelector("td:nth-child(4)"));
+            var addr = address.getText();
+            if (addr == null || addr.isEmpty()) {
+                addr = "";
+            }
             var checkbox = cnt.findElement(By.name("selected[]"));
             var id = checkbox.getAttribute("id");
-            contacts.add(new ContactData().withId(id).withLastname(last).withFirstname(first));
+            contacts.add(new ContactData().withId(id).withLastname(last).withFirstname(first).withAddress(addr));
         }
         return contacts;
     }

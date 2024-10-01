@@ -12,7 +12,7 @@ import java.util.Random;
     @Test
     void canModifyContact() {
         if (app.contacts().getCount() == 0) {
-            app.contacts().Create(new ContactData("", "test_name", "test_middle", "test_last", "test_nick", "test_phone", "", ""));
+            app.contacts().createContact(new ContactData("", "test_name", "test_middle", "test_last", "test_nick", "test_phone", "", ""));
         }
         var oldContacts = app.contacts().getList();
         var rnd = new Random();

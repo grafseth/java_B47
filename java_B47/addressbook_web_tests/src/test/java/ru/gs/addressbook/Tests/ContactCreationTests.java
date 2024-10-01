@@ -72,7 +72,7 @@ var mapper = new XmlMapper();
     @MethodSource("contactProvider")
     public void canCreateMultipleContacts(ContactData contacts) {
         var oldContacts = app.contacts().getList();
-        app.contacts().Create(contacts);
+        app.contacts().createContact(contacts);
         var newContacts = app.contacts().getList();
         Comparator<ContactData> compareById = (o1, o2) -> {
             return Integer.compare(Integer.parseInt(o1.id()), Integer.parseInt(o2.id()));
@@ -108,6 +108,6 @@ void canCreateContact() {
             .withFirstname(CommonFunctions.randomString(10))
             .withLastname(CommonFunctions.randomString(10))
             .withPhoto(randomFile("src/test/resources/images/"));
-    app.contacts().Create(contact);
+    app.contacts().createContact(contact);
 }
 }
