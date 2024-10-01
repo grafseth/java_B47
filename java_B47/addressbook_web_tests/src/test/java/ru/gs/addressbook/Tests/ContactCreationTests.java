@@ -2,6 +2,7 @@ package ru.gs.addressbook.Tests;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -10,7 +11,9 @@ import ru.gs.addressbook.common.CommonFunctions;
 import ru.gs.addressbook.model.ContactData;
 import ru.gs.addressbook.model.GroupData;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -19,23 +22,14 @@ import java.util.List;
 
 public class ContactCreationTests extends TestBase {
 
-    @Test
-    void canCreateContact() {
-        var contact = new ContactData()
-                .withFirstname(CommonFunctions.randomString(10))
-                .withLastname(CommonFunctions.randomString(10))
-                .withPhoto(randomFile("src/test/resources/images/"));
-        app.contacts().Create(contact);
-    }
-
-    private static List<ContactData> contactProvider() throws IOException {
+    public static List<ContactData> contactProvider() throws IOException {
         var result = new ArrayList<ContactData>();
-        //    for (var firstname : List.of(" ", "test_name")) {
+
+//    for (var firstname : List.of(" ", "test_name")) {
 //        for (var middlename : List.of(" ", "test_middle")) {
 //            for (var lastname : List.of(" ", "test_last")) {
 //                for (var nickname : List.of(" ", "test_nick")) {
 //                    for (var home : List.of(" ", "test_phone")) {
-//
 //                            result.add(new ContactData()
 //                                    .withFirstname(firstname)
 //                                    .withMiddlename(middlename)
@@ -46,60 +40,31 @@ public class ContactCreationTests extends TestBase {
 //                }
 //            }
 //        }
-//    }
 
-        var mapper = new ObjectMapper();
-        var value = mapper.readValue(new File("contacts.json"), new TypeReference<List<ContactData>>() {});
-        result.addAll(value);
-        return result;
-    }
+//    for (int i = 0; i < 5; i++) {
+//        result.add(new ContactData()
+//                .withFirstname(CommonFunctions.randomString(i*10))
+//                .withMiddlename(CommonFunctions.randomString(i*10))
+//                .withLastname(CommonFunctions.randomString(i*10))
+//                .withNickname(CommonFunctions.randomString(i*10))
+//                .withHome(CommonFunctions.randomString(i*10)));
+//            }
 
-
-    @Test
-    void canCreateContactInGroup() {
-        var contact = new ContactData()
-                .withFirstname(CommonFunctions.randomString(10))
-                .withLastname(CommonFunctions.randomString(10))
-                .withPhoto(randomFile("src/test/resources/images/"));
-        if (app.hbm().getGroupCount() == 0) {
-            app.hbm().createGroup(new GroupData("", "test_group", "header", "footer"));
-        }
-        var group = app.hbm().getGroupList().get(0);
-
-        var oldRelated = app.hbm().getContactsInGroup(group);
-        app.contacts().Create(contact, group);
-        var newRelated = app.hbm().getContactsInGroup(group);
-        Assertions.assertEquals(oldRelated.size()+1, newRelated.size());
-    }
-
-    public static List<ContactData> contactProvider() {
-
-    var result = new ArrayList<ContactData>();
-    for (var firstname : List.of(" ", "test_name")) {
-        for (var middlename : List.of(" ", "test_middle")) {
-            for (var lastname : List.of(" ", "test_last")) {
-                for (var nickname : List.of(" ", "test_nick")) {
-                    for (var home : List.of(" ", "test_phone")) {
-                            result.add(new ContactData()
-                                    .withFirstname(firstname)
-                                    .withMiddlename(middlename)
-                                    .withLastname(lastname)
-                                    .withNickname(nickname)
-                                    .withHome(home));
-                        }
-                }
+        var json="";
+        try (var resder=new FileReader("contacts.xml");
+             var breader=new BufferedReader(resder))
+        {
+            var line= breader.readLine();
+            while(line !=null){
+                json=json+line;
+                line=breader.readLine();
             }
-        }
-    }
 
-    for (int i = 0; i < 5; i++) {
-        result.add(new ContactData()
-                .withFirstname(CommonFunctions.randomString(i*10))
-                .withMiddlename(CommonFunctions.randomString(i*10))
-                .withLastname(CommonFunctions.randomString(i*10))
-                .withNickname(CommonFunctions.randomString(i*10))
-                .withHome(CommonFunctions.randomString(i*10)));
-            }
+        }
+var mapper = new XmlMapper();
+    var value = mapper.readValue(new File("contacts.xml"), new TypeReference<List<ContactData>>() {});
+    //var value = mapper.readValue(new File("groups.json"), new TypeReference <List<GroupData>>() {});
+    result.addAll(value);
     return result;
     }
 
@@ -119,4 +84,30 @@ public class ContactCreationTests extends TestBase {
         expectedList.sort(compareById);
         Assertions.assertEquals(newContacts, expectedList);
     }
+
+@Test
+void canCreateContactInGroup() {
+    var contact = new ContactData()
+            .withFirstname(CommonFunctions.randomString(10))
+            .withLastname(CommonFunctions.randomString(10))
+            .withPhoto(randomFile("src/test/resources/images/"));
+    if (app.hbm().getGroupCount() == 0) {
+        app.hbm().createGroup(new GroupData("", "test_group", "header", "footer"));
+    }
+    var group = app.hbm().getGroupList().get(0);
+
+    var oldRelated = app.hbm().getContactsInGroup(group);
+    app.contacts().Create(contact, group);
+    var newRelated = app.hbm().getContactsInGroup(group);
+    Assertions.assertEquals(oldRelated.size()+1, newRelated.size());
+}
+
+@Test
+void canCreateContact() {
+    var contact = new ContactData()
+            .withFirstname(CommonFunctions.randomString(10))
+            .withLastname(CommonFunctions.randomString(10))
+            .withPhoto(randomFile("src/test/resources/images/"));
+    app.contacts().Create(contact);
+}
 }

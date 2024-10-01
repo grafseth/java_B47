@@ -67,10 +67,10 @@ public class Generator {
         for (int i = 0; i < count; i++) {
             result.add(new ContactData()
                 .withFirstname(CommonFunctions.randomString(i*10))
-                .withMiddlename(CommonFunctions.randomString(i*10))
-                .withLastname(CommonFunctions.randomString(i*10))
-                .withNickname(CommonFunctions.randomString(i*10))
-                .withHome(CommonFunctions.randomString(i*10)));
+                .withMiddlename(CommonFunctions.randomString(i*10)));
+//                .withLastname(CommonFunctions.randomString(i*10))
+//                .withNickname(CommonFunctions.randomString(i*10))
+//                .withHome(CommonFunctions.randomString(i*10)))
         }
         return result;
     }
@@ -78,6 +78,7 @@ public class Generator {
     private void save(Object data) throws IOException {
         if ("json".equals(format)) {
             ObjectMapper mapper = new ObjectMapper();
+            mapper.writeValue(new File(output), data);
             mapper .enable(SerializationFeature. INDENT_OUTPUT) ;
             var json = mapper.writeValueAsString(data);
 

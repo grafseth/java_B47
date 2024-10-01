@@ -124,14 +124,14 @@ public class ContactsHelper extends HelperBase {
             if (first == null || first.isEmpty()) {
                 first = "";
             }
-            var address = cnt.findElement(By.cssSelector("td:nth-child(4)"));
-            var addr = address.getText();
-            if (addr == null || addr.isEmpty()) {
-                addr = "";
-            }
+//            var address = cnt.findElement(By.cssSelector("td:nth-child(4)"));
+//            var addr = address.getText();
+//            if (addr == null || addr.isEmpty()) {
+//                addr = "";
+//            }
             var checkbox = cnt.findElement(By.name("selected[]"));
             var id = checkbox.getAttribute("id");
-            contacts.add(new ContactData().withId(id).withLastname(last).withFirstname(first).withAddress(addr));
+            contacts.add(new ContactData().withId(id).withLastname(last).withFirstname(first));
         }
         return contacts;
     }
