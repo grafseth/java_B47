@@ -1,5 +1,6 @@
 package ru.gs.addressbook.Tests;
 
+import org.junit.jupiter.api.AfterEach;
 import ru.gs.addressbook.Manager.ApplicationManager;
 import org.junit.jupiter.api.BeforeEach;
 
@@ -30,5 +31,9 @@ public class TestBase {
             app = new ApplicationManager();
             app.init(System.getProperty("Browser", "chrome"), properties);
         }
+    }
+    @AfterEach
+    void checkDatabaseConsistency() {
+        app.jdbc().checkConsistency();
     }
 }

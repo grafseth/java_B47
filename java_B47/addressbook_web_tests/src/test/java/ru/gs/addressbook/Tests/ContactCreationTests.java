@@ -19,7 +19,7 @@ import java.util.Comparator;
 import java.util.List;
 
 
-public class ContactCreationTestsJson extends TestBase {
+public class ContactCreationTests extends TestBase {
 
     public static List<ContactData> contactProvider() throws IOException {
         var result = new ArrayList<ContactData>();
@@ -82,7 +82,7 @@ var mapper = new XmlMapper();
         newContacts.sort(compareById);
         var maxId = newContacts.get(newContacts.size() - 1).id();
         var expectedList = new ArrayList<>(oldContacts);
-        expectedList.add(contacts.withId(maxId).withFirstname("").withMiddlename("").withLastname(""));
+        expectedList.add(contacts.withId(maxId).withFirstname(contacts.firstname()).withMiddlename(contacts.middlename()).withLastname(contacts.lastname()));
         expectedList.sort(compareById);
         Assertions.assertEquals(newContacts, expectedList);
     }
