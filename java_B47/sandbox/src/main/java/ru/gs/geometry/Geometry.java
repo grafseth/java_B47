@@ -15,12 +15,7 @@ public class Geometry {
     public static void main(String[] args) {
         Supplier<Square> randomSquare = () -> new Square(new Random().nextDouble(100.0));
         var squares = Stream.generate(randomSquare).limit(5);
-
-        Consumer<Square> print = square -> {
-            Square.printSquareArea(square);
-            Square.printSquarePerimeter(square);
-        };
-        squares.forEach(print);
+        squares.peek(Square::printSquareArea).forEach(Square::printSquarePerimeter);
 
 
 //        Rectangle.printRectangleArea(3.0, 5.0);

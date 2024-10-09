@@ -19,6 +19,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.function.Supplier;
+import java.util.stream.Stream;
 
 public class GroupCreationTests extends TestBase {
 
@@ -50,12 +52,20 @@ public class GroupCreationTests extends TestBase {
         return result;
     }
 
-    public static List<GroupData> singleRandomGroup() throws IOException {
-    return List.of(new GroupData()
+    public static Stream<GroupData> singleRandomGroup() throws IOException {
+        Supplier<GroupData> randomGroup = () -> new GroupData()
             .withName(CommonFunctions.randomString(10))
             .withHeader(CommonFunctions.randomString(20))
-            .withFooter(CommonFunctions.randomString(30)));
+            .withFooter(CommonFunctions.randomString(30));
+        return Stream.generate(randomGroup).limit(3);
     }
+
+//    public static List<GroupData> singleRandomGroup() throws IOException {
+//        return List.of(new GroupData()
+//                .withName(CommonFunctions.randomString(10))
+//                .withHeader(CommonFunctions.randomString(20))
+//                .withFooter(CommonFunctions.randomString(30)));
+//    }
 
     @ParameterizedTest
     @MethodSource("groupProvider")
@@ -81,6 +91,23 @@ public class GroupCreationTests extends TestBase {
         var oldGroups = app.jdbc().getGroupList();
        app.groups().createGroup(group);
         var newGroups = app.jdbc().getGroupList();
+        Comparator<GroupData> compareById = (o1, o2) -> {
+            return Integer.compare(Integer.parseInt(o1.Id()), Integer.parseInt(o2.Id()));
+        };
+        newGroups.sort(compareById);
+        var maxId = newGroups.get(newGroups.size() - 1).Id();
+        var expectedList = new ArrayList<>(oldGroups);
+        expectedList.add(group.withId(maxId));
+        expectedList.sort(compareById);
+        Assertions.assertEquals(newGroups, expectedList);
+    }
+
+    @ParameterizedTest
+    @MethodSource("singleRandomGroup")
+    public void canCreateSingleGroupHbm(GroupData group) throws SQLException {
+        var oldGroups = app.hbm().getGroupList();
+        app.groups().createGroup(group);
+        var newGroups = app.hbm().getGroupList();
         Comparator<GroupData> compareById = (o1, o2) -> {
             return Integer.compare(Integer.parseInt(o1.Id()), Integer.parseInt(o2.Id()));
         };
