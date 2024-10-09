@@ -5,16 +5,21 @@ import ru.gs.geometry.figures.Square;
 import ru.gs.geometry.figures.Triangle;
 
 import java.util.List;
+import java.util.Random;
 import java.util.function.Consumer;
+import java.util.function.Supplier;
+import java.util.stream.Stream;
 
 
 public class Geometry {
     public static void main(String[] args) {
-        var squares = List.of(new Square(7.0), new Square(5.0),new Square(3.0));
-//        for (Square square : squares) {
-//            Square.printSquareArea(square);
-//        }
-        Consumer<Square> print = Square::printSquareArea;
+        Supplier<Square> randomSquare = () -> new Square(new Random().nextDouble(100.0));
+        var squares = Stream.generate(randomSquare).limit(5);
+
+        Consumer<Square> print = square -> {
+            Square.printSquareArea(square);
+            Square.printSquarePerimeter(square);
+        };
         squares.forEach(print);
 
 

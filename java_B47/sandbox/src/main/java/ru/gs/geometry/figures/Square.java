@@ -14,6 +14,12 @@ if (side < 0) {
         System.out.println(text);
     }
 
+    public static void printSquarePerimeter(Square p) {
+        String text = String.format("Square perimeter with side %f = %f", p.side, p.area());
+        System.out.println(text);
+    }
+
+
     public double area() {
         return this.side * this.side;
     }
