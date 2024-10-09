@@ -1,5 +1,6 @@
 package ru.gs.addressbook.Manager;
 
+import org.openqa.selenium.WebElement;
 import ru.gs.addressbook.model.GroupData;
 import org.openqa.selenium.By;
 
@@ -13,11 +14,14 @@ public class GroupHelper extends HelperBase {
 
     }
 
-    private static void selectAllGroups() {
-        var checkboxes = ApplicationManager.driver.findElements(By.name("selected[]"));
-        for (var checkbox : checkboxes) {
-            checkbox.click();
-        }
+//    private static void selectAllGroupsCycle() {
+//        var checkboxes = ApplicationManager.driver.findElements(By.name("selected[]"));
+//        for (var checkbox : checkboxes) {
+//            checkbox.click();
+//        }
+
+        private static void selectAllGroups() {
+            ApplicationManager.driver.findElements(By.name("selected[]")).forEach(WebElement::click);
     }
 
     public void openGroupsPage() {
