@@ -30,8 +30,6 @@ public class GroupRecord {
 
     public List<ContactRecord> contacts;
 
-    public GroupRecord() {
-    }
 
     public GroupRecord(int id, String name, String header, String footer) {
 

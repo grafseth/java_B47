@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static org.hibernate.Hibernate.list;
+
 public class HibernateHelper extends HelperBase{
 
     private SessionFactory sessionFactory;
@@ -68,7 +70,11 @@ public class HibernateHelper extends HelperBase{
         return new ContactData().withId("" + record.id)
         .withFirstname(record.firstname)
                 .withLastname(record.lastname)
-                .withAddress(record.address);
+                .withAddress(record.address)
+                .withHome(record.home)
+                .withWork(record.work)
+                .withMobile(record.mobile)
+                .withSecondary(record.phone2);
     }
     private static ContactRecord convert(ContactData data) {
         var id = data.id();
@@ -83,6 +89,14 @@ public class HibernateHelper extends HelperBase{
             return session.createQuery("from GroupRecord", GroupRecord.class).list();
         }));
         }
+
+    public List<ContactData> getContactList() {
+
+        return convertContactList(sessionFactory.fromSession(session -> {
+            return session.createQuery("from ContactRecord", ContactRecord.class).list();
+        }));
+
+    }
 
     public long getGroupCount() {
         return sessionFactory.fromSession(session -> {

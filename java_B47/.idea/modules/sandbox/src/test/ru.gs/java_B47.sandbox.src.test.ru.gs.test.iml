@@ -1,17 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<module external.linked.project.id=":sandbox:test" external.linked.project.path="$MODULE_DIR$/../../../sandbox" external.root.project.path="$MODULE_DIR$/../../.." external.system.id="GRADLE" external.system.module.group="org.example" external.system.module.type="sourceSet" external.system.module.version="unspecified" type="JAVA_MODULE" version="4">
+<module external.linked.project.id=":sandbox:src:test:ru.gs:test" external.linked.project.path="$MODULE_DIR$/../../../../../../sandbox/src/test/ru.gs" external.root.project.path="$MODULE_DIR$/../../../../../.." external.system.id="GRADLE" external.system.module.group="org.example" external.system.module.type="sourceSet" external.system.module.version="unspecified" type="JAVA_MODULE" version="4">
   <component name="NewModuleRootManager">
-    <output-test url="file://$MODULE_DIR$/../../../sandbox/out/test/classes" />
+    <output-test url="file://$MODULE_DIR$/../../../../../../sandbox/src/test/ru.gs/out/test/classes" />
     <exclude-output />
-    <content url="file://$MODULE_DIR$/../../../sandbox/src/test/java">
-      <sourceFolder url="file://$MODULE_DIR$/../../../sandbox/src/test/java" isTestSource="true" />
-    </content>
-    <content url="file://$MODULE_DIR$/../../../sandbox/src/test/resources">
-      <sourceFolder url="file://$MODULE_DIR$/../../../sandbox/src/test/resources" type="java-test-resource" />
+    <content url="file://$MODULE_DIR$/../../../../../../sandbox/src/test/ru.gs/src/test">
+      <sourceFolder url="file://$MODULE_DIR$/../../../../../../sandbox/src/test/ru.gs/src/test/java" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/../../../../../../sandbox/src/test/ru.gs/src/test/resources" type="java-test-resource" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module" module-name="java_B47.sandbox.main" />
+    <orderEntry type="module" module-name="java_B47.sandbox.src.test.ru.gs.main" />
     <orderEntry type="library" name="Gradle: org.junit.jupiter:junit-jupiter:5.10.0" level="project" />
     <orderEntry type="library" name="Gradle: org.junit.jupiter:junit-jupiter-params:5.10.0" level="project" />
     <orderEntry type="library" name="Gradle: org.junit.jupiter:junit-jupiter-api:5.10.0" level="project" />
@@ -21,5 +19,5 @@
     <orderEntry type="library" scope="RUNTIME" name="Gradle: org.junit.jupiter:junit-jupiter-engine:5.10.0" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: org.junit.platform:junit-platform-engine:1.10.0" level="project" />
   </component>
-  <component name="TestModuleProperties" production-module="java_B47.sandbox.main" />
+  <component name="TestModuleProperties" production-module="java_B47.sandbox.src.test.ru.gs.main" />
 </module>
