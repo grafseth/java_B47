@@ -1,4 +1,6 @@
 rootProject.name = 'java_B47'
 include 'addressbook_web_tests'
 include 'sandbox'
+include 'sandbox:src:test:ru.gs'
+findProject(':sandbox:src:test:ru.gs')?.name = 'ru.gs'
 
