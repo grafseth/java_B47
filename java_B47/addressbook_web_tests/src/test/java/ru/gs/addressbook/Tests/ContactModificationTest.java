@@ -21,7 +21,7 @@ import java.util.Random;
                             "test_last",
                             "test_nick",
                             "test_phone",
-                            "", "", "", "", "", "", "", ""));
+                            "", "", "", "", ""));
         }
         var oldContacts = app.contacts().getList();
         var rnd = new Random();

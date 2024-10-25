@@ -68,12 +68,12 @@ public class HibernateHelper extends HelperBase{
 
     private static ContactData convert(ContactRecord record) {
         return new ContactData().withId("" + record.id)
-        .withFirstname(record.firstname)
+                .withFirstname(record.firstname)
                 .withLastname(record.lastname)
                 .withAddress(record.address)
                 .withHome(record.home)
-                .withWork(record.work)
                 .withMobile(record.mobile)
+                .withWork(record.work)
                 .withSecondary(record.phone2);
     }
     private static ContactRecord convert(ContactData data) {
@@ -91,7 +91,6 @@ public class HibernateHelper extends HelperBase{
         }
 
     public List<ContactData> getContactList() {
-
         return convertContactList(sessionFactory.fromSession(session -> {
             return session.createQuery("from ContactRecord", ContactRecord.class).list();
         }));

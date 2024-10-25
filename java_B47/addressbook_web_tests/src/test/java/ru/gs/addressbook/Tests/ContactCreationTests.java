@@ -25,22 +25,22 @@ public class ContactCreationTests extends TestBase {
         var result = new ArrayList<ContactData>();
 
 
-        var json="";
-        try (var resder=new FileReader("contacts.xml");
-             var breader=new BufferedReader(resder))
-        {
-            var line= breader.readLine();
-            while(line !=null){
-                json=json+line;
-                line=breader.readLine();
+        var json = "";
+        try (var resder = new FileReader("contacts.xml");
+             var breader = new BufferedReader(resder)) {
+            var line = breader.readLine();
+            while (line != null) {
+                json = json + line;
+                line = breader.readLine();
             }
 
         }
-var mapper = new XmlMapper();
-    var value = mapper.readValue(new File("contacts.xml"), new TypeReference<List<ContactData>>() {});
-    //var value = mapper.readValue(new File("groups.json"), new TypeReference <List<GroupData>>() {});
-    result.addAll(value);
-    return result;
+        var mapper = new XmlMapper();
+        var value = mapper.readValue(new File("contacts.xml"), new TypeReference<List<ContactData>>() {
+        });
+        //var value = mapper.readValue(new File("groups.json"), new TypeReference <List<GroupData>>() {});
+        result.addAll(value);
+        return result;
     }
 
 //    public static List<ContactData> anotherContactProvider() throws IOException {
@@ -87,29 +87,31 @@ var mapper = new XmlMapper();
         Assertions.assertEquals(newContacts, expectedList);
     }
 
-@Test
-void canCreateContactInGroup() {
-    var contact = new ContactData()
-            .withFirstname(CommonFunctions.randomString(10))
-            .withLastname(CommonFunctions.randomString(10))
-            .withPhoto(randomFile("src/test/resources/images/"));
-    if (app.hbm().getGroupCount() == 0) {
-        app.hbm().createGroup(new GroupData("", "test_group", "header", "footer"));
+    @Test
+    void canCreateContactInGroup() {
+        var contact = new ContactData()
+                .withFirstname(CommonFunctions.randomString(10))
+                .withLastname(CommonFunctions.randomString(10))
+                .withPhoto(randomFile("src/test/resources/images/"));
+        if (app.hbm().getGroupCount() == 0) {
+            app.hbm().createGroup(new GroupData("", "test_group", "header", "footer"));
+        }
+        var group = app.hbm().getGroupList().get(0);
+
+        var oldRelated = app.hbm().getContactsInGroup(group);
+        app.contacts().Create(contact, group);
+        var newRelated = app.hbm().getContactsInGroup(group);
+        Assertions.assertEquals(oldRelated.size() + 1, newRelated.size());
     }
-    var group = app.hbm().getGroupList().get(0);
 
-    var oldRelated = app.hbm().getContactsInGroup(group);
-    app.contacts().Create(contact, group);
-    var newRelated = app.hbm().getContactsInGroup(group);
-    Assertions.assertEquals(oldRelated.size()+1, newRelated.size());
-}
-
-@Test
-void canCreateContact() {
-    var contact = new ContactData()
-            .withFirstname(CommonFunctions.randomString(10))
-            .withLastname(CommonFunctions.randomString(10))
-            .withPhoto(randomFile("src/test/resources/images/"));
-    app.contacts().createContact(contact);
-}
+    @Test
+    void canCreateContact() {
+        var contact = new ContactData()
+                .withFirstname(CommonFunctions.randomString(10))
+                .withLastname(CommonFunctions.randomString(10))
+                .withHome(CommonFunctions.randomString(10))
+                .withMobile(CommonFunctions.randomString(10))
+                .withSecondary(CommonFunctions.randomString(10));
+        app.contacts().createContact(contact);
+    }
 }
