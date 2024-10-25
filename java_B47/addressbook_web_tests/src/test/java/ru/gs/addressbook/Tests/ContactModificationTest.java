@@ -14,14 +14,15 @@ import java.util.Random;
         app.contacts().openContactsPage();
         if (app.contacts().getCount() == 0) {
             app.contacts().createContact(
-                    new ContactData(
-                            "",
-                            "test_name",
-                            "test_middle",
-                            "test_last",
-                            "test_nick",
-                            "test_phone",
-                            "", "", "", "", ""));
+//                    new ContactData(
+//                            "",
+//                            "test_name",
+//                            "test_middle",
+//                            "test_last",
+//                            "test_nick",
+//                            "test_phone",
+//                            "", "", "", "", ""));
+                    new ContactData("","","","","","","","","","", ""));
         }
         var oldContacts = app.contacts().getList();
         var rnd = new Random();

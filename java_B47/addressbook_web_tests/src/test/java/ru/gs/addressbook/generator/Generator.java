@@ -68,7 +68,8 @@ public class Generator {
     private Object generateContacts() {
         return generateData(() -> new ContactData()
                     .withFirstname(CommonFunctions.randomString(10))
-                    .withMiddlename(CommonFunctions.randomString(10)));
+                    .withMiddlename(CommonFunctions.randomString(10))
+                    .withAddress(CommonFunctions.randomString(10)));
         }
 
 

@@ -54,13 +54,13 @@ public class HibernateHelper extends HelperBase{
         return new GroupRecord(Integer.parseInt(id), data.name(), data.header(), data.footer());
     }
 
-//    static List<ContactData> convertContactList(List<ContactRecord> records) {
-//        List<ContactData> result = new ArrayList<>();
-//        for (var record : records) {
-//            result.add(convert(record));
-//        }
-//        return result;
-//    }
+    static List<ContactData> convertContactListOld(List<ContactRecord> records) {
+        List<ContactData> result = new ArrayList<>();
+        for (var record : records) {
+            result.add(convert(record));
+        }
+        return result;
+    }
 
     static List<ContactData> convertContactList(List<ContactRecord> records) {
        return records.stream().map(HibernateHelper::convert).collect(Collectors.toList());
@@ -70,11 +70,11 @@ public class HibernateHelper extends HelperBase{
         return new ContactData().withId("" + record.id)
                 .withFirstname(record.firstname)
                 .withLastname(record.lastname)
-                .withAddress(record.address)
-                .withHome(record.home)
-                .withMobile(record.mobile)
-                .withWork(record.work)
-                .withSecondary(record.phone2);
+                .withAddress(record.address);
+//                .withHome(record.home)
+//                .withMobile(record.mobile)
+//                .withWork(record.work)
+//                .withSecondary(record.phone2);
     }
     private static ContactRecord convert(ContactData data) {
         var id = data.id();
@@ -92,6 +92,13 @@ public class HibernateHelper extends HelperBase{
 
     public List<ContactData> getContactList() {
         return convertContactList(sessionFactory.fromSession(session -> {
+            return session.createQuery("from ContactRecord", ContactRecord.class).list();
+        }));
+
+    }
+
+    public List<ContactData> getContactListOld() {
+        return convertContactListOld(sessionFactory.fromSession(session -> {
             return session.createQuery("from ContactRecord", ContactRecord.class).list();
         }));
 
