@@ -3,4 +3,5 @@ include 'addressbook_web_tests'
 include 'sandbox'
 include 'sandbox:src:test:ru.gs'
 findProject(':sandbox:src:test:ru.gs')?.name = 'ru.gs'
+include 'mantis_tests'
 
