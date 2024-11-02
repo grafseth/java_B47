@@ -3,6 +3,7 @@ package ru.gs.addressbook.Manager;
 import ru.gs.addressbook.model.GroupData;
 
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +24,7 @@ public class JdbcHelper extends HelperBase{
                           .withName(result.getString("group_name"))
                           .withHeader(result.getString("group_header"))
                           .withFooter(result.getString("group_footer")));
+                  var id=result.getString("group_id");
                                 }
 
         } catch (SQLException e) {
@@ -43,5 +45,13 @@ public class JdbcHelper extends HelperBase{
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public void removeContactInGroup(int group_id) throws SQLException {
+        var conn=DriverManager.getConnection("jdbc:mysql://localhost/addressbook","root","");
+        PreparedStatement st = conn.prepareStatement(String.format("DELETE FROM address_in_groups WHERE group_id=%s limit 1", group_id));
+        st.executeUpdate();
+        st.close();
+        conn.close();
     }
 }

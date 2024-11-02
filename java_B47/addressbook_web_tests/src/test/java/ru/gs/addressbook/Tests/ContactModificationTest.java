@@ -3,6 +3,7 @@ package ru.gs.addressbook.Tests;
 import ru.gs.addressbook.model.ContactData;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import ru.gs.addressbook.model.GroupData;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -39,4 +40,22 @@ import java.util.Random;
         expectedList.sort(compareById);
         Assertions.assertEquals(newContacts, expectedList);
     }
+
+     @Test
+     public void canAddContactInGroup()
+     {
+         if (app.contacts().getCount() == 0) {
+             app.contacts().createContact(
+                     new ContactData("","","","","","","","","","", ""));
+         }
+         var contact=app.hbm().getContactList().get(0);
+         if (app.hbm().getGroupCount()==0){
+             app.groups().createGroup(new GroupData("", "", "", ""));
+         }
+         var group=app.hbm().getGroupList().get(0);
+         var oldRelated=app.hbm().getContactsInGroup(group);
+         app.contacts().createGroupWithoutNewContact(contact, group);
+         var newRelated=app.hbm().getContactsInGroup(group);
+         Assertions.assertEquals(oldRelated.size()+1,newRelated.size());
+     }
 }
